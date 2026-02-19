@@ -1,5 +1,5 @@
 # gpt2-systems-training
-EThis project implements an end-to-end GPT-2 style Transformer training system with a focus on performance, scalability, and AI systems engineering.
+This project implements an end-to-end GPT-2 style Transformer training system with a focus on performance, scalability, and AI systems engineering.
 
 It combines efficient dataset processing, C++/Python interoperability, and optimized PyTorch training into a complete language model pipeline.
 
