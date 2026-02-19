@@ -1,60 +1,37 @@
 # gpt2-systems-training
-End-to-end GPT-2 training pipeline with C++ (pybind11) sharded DataLoader, efficient tokenization, and performance-optimized PyTorch Transformer training.
+EThis project implements an end-to-end GPT-2 style Transformer training system with a focus on performance, scalability, and AI systems engineering.
 
-GPT-2 Training Pipeline with High-Performance C++ DataLoader
+It combines efficient dataset processing, C++/Python interoperability, and optimized PyTorch training into a complete language model pipeline.
 
-An end-to-end implementation of a GPT-2 style Transformer training pipeline featuring:
+Project Overview
 
-Efficient dataset ingestion and tokenization
+This repository builds a mini GPT-style language model from scratch:
 
-Sharded token storage for large-scale training
+Downloads and processes a large-scale educational text dataset.
 
-High-throughput C++ DataLoader (pybind11 + Eigen)
+Tokenizes text using GPT-2 vocabulary.
 
-PyTorch GPT-2 architecture implementation
+Stores tokens in memory-efficient sharded .npy files.
 
-Training + evaluation workflow
+Uses a C++ DataLoader (via pybind11) for high-throughput batch generation.
 
-Performance-oriented engineering design
+Trains a GPT-2 style Transformer model in PyTorch.
 
-This project demonstrates AI model training systems engineering, combining C++, Python, PyTorch, and large-scale dataset processing.
+Evaluates validation performance.
 
-📌 Project Overview (Simple Explanation)
+The emphasis is not only on model implementation but also on efficient training system design.
 
-This project builds a mini version of ChatGPT from scratch.
+Technical Architecture
 
-It:
+Dataset (FineWeb-Edu)
+→ Tokenization (tiktoken – GPT-2 encoding)
+→ Sharded uint16 token files (.npy)
+→ C++ DataLoader (cnpy + Eigen + pybind11)
+→ PyTorch GPT-2 Model
+→ Training Loop (LR scheduling, gradient clipping)
+→ Evaluation
 
-Downloads a large educational text dataset.
-
-Converts text into numerical tokens.
-
-Stores tokens in optimized shards.
-
-Uses a C++ DataLoader for fast batch generation.
-
-Trains a GPT-2 style Transformer to predict the next token.
-
-Evaluates model performance.
-
-The focus is not just model training — but building a scalable and efficient training system.
-
-🧠 Technical Architecture
-FineWeb-Edu Dataset
-        ↓
-Tokenization (tiktoken - GPT2 vocab)
-        ↓
-Sharded .npy token files (uint16)
-        ↓
-C++ DataLoader (cnpy + Eigen + pybind11)
-        ↓
-PyTorch GPT-2 Model
-        ↓
-Training Loop (LR scheduling, clipping, AMP)
-        ↓
-Checkpoints + Evaluation
-
-⚙️ Tech Stack
+Tech Stack
 
 Python
 
@@ -74,147 +51,89 @@ tiktoken
 
 Transformer architecture
 
-Mixed precision training
+Key Engineering Highlights
+1. Scalable Dataset Pipeline
 
-Learning rate scheduling
+Tokenizes large text datasets
 
-Gradient clipping
+Stores tokens as uint16 for memory efficiency
 
-📂 Repository Structure
-├── fineweb.py          # Dataset download + tokenization + shard generation
-├── DataLoader.cpp      # High-performance C++ DataLoader
-├── binding_setup.py    # pybind11 build script
-├── gpt2_train.py       # GPT-2 model + training loop
-├── gpt2_eval.py        # Evaluation script
-├── train_gpt2.py       # Model definition utilities
-├── README.md
-
-🔥 Key Engineering Highlights
-1️⃣ Sharded Token Dataset Design
-
-Converts text into GPT-2 tokens
-
-Stores as uint16 arrays for memory efficiency
-
-Splits into 100M-token shards
+Shards data for scalable training
 
 Supports train/validation splits
 
-2️⃣ High-Performance C++ DataLoader
+2. High-Performance C++ DataLoader
 
 Loads .npy shards using cnpy
 
-Uses Eigen for matrix mapping
+Uses Eigen for efficient tensor mapping
 
 Exposed to Python via pybind11
 
-Reduces Python overhead in batch generation
+Reduces Python bottlenecks in batch generation
 
-Designed for large-scale training throughput
+3. GPT-2 Model Implementation
 
-3️⃣ GPT-2 Model Implementation
+Multi-head causal self-attention
 
-Multi-Head Causal Self-Attention
-
-Flash Attention path (scaled_dot_product_attention)
+Flash attention path (scaled_dot_product_attention)
 
 Weight tying
 
-LayerNorm + MLP blocks
+Layer normalization and MLP blocks
 
-Cosine learning rate schedule
+Cosine learning rate scheduling
 
 Gradient clipping
+
+4. Training System Engineering
 
 GPU acceleration support
 
-4️⃣ Training Engineering
+Token throughput tracking
 
-Tokens/sec performance tracking
+Efficient batch shaping (B × T)
 
-Mixed precision optimization
+Validation loss evaluation
 
-Batch shaping (B × T)
+Installation
 
-Loss evaluation on validation split
+Install Python dependencies:
 
-🚀 Installation
-1️⃣ Install Python Dependencies
 pip install torch datasets tiktoken tqdm numpy pybind11 transformers
 
-2️⃣ Install System Dependencies (Linux / WSL)
+Install system dependencies (Linux / WSL):
+
 sudo apt-get install libeigen3-dev zlib1g-dev
 
-3️⃣ Build C++ Extension
+Build C++ extension:
+
 python binding_setup.py build_ext --inplace
 
-📥 Download & Prepare Dataset
+Usage
+
+Download and tokenize dataset:
+
 python fineweb.py
 
+Train model:
 
-This will:
-
-Download FineWeb-Edu (sample-10BT)
-
-Tokenize using GPT-2 encoding
-
-Create edu_fineweb10B/ directory
-
-Generate .npy shards
-
-🏋️ Train the Model
 python gpt2_train.py
 
+Evaluate model:
 
-Training includes:
-
-Optimizer setup
-
-Learning rate scheduling
-
-Gradient clipping
-
-Periodic evaluation
-
-📊 Evaluate Model
 python gpt2_eval.py
 
+What This Project Demonstrates
 
-Evaluates validation loss and model performance.
+Transformer architecture implementation
 
-🧪 What This Project Demonstrates
-
-✔ Transformer architecture implementation
-✔ Efficient large-scale dataset processing
-✔ C++/Python interoperability (pybind11)
-✔ Performance-focused AI systems design
-✔ End-to-end model training workflow
-✔ ML engineering best practices
-
-🎯 Why This Project Is Relevant for AI / ML Engineering Roles
-
-This repository showcases:
-
-Deep understanding of Transformer internals
-
-Systems-level thinking (data pipeline + batching efficiency)
+AI model training pipeline design
 
 Cross-language engineering (C++ + Python)
 
-Optimization for throughput
+Performance-focused ML systems
 
-Training pipeline design
+Large-scale dataset handling
 
-Relevant for roles such as:
-
-AI Engineer
-
-Machine Learning Engineer
-
-Applied Scientist
-
-Deep Learning Engineer
-
-AI Infrastructure Engineer
-
-ML Systems Engineer
+End-to-end model training workflow
